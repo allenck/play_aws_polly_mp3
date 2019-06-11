@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+<html lang = "en">
+<head>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>AWS POLLY</title>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-5">AWS Polly - Play Text</h1>
+        <div style="text-align:center">
+            <img src="./static/logo.png" class="img-fluid img-thumbnail" alt="...">
+            <!--img src="./static/esp32.png" class="img-fluid img-thumbnail" alt="..."-->
+        </div>
+        <div style="text-align:left">
+        </div>
+        <div class="row justify-content-md-center" >
+            <h2>Text to play</h2>
+        </div>
+        <div>
+            <p>Enter the text that will be played.</p>
+        <div>
+            <form id="text_form" required="required">
+              <textarea id="theinput" name="message" rows="10" cols="60">The cat was playing in the garden.</textarea>
+              <br>
+              Voice: <input list="voices" name="voice" id="voice" autocomplete="on" placeholder="select voice" required="required">
+                <datalist id="voices">
+                  <option value="Ivy">
+                  <option value="Joanna">
+                  <option value="Kendra">
+                  <option value="Kimberly">
+                  <option value="Salli">
+                  <option value="Joey">
+                  <option value="Justin">
+                  <option value="Matthew">
+                  <option value="Nicole">
+                  <option value="Russell">
+                  <option value="Amy">
+                  <option value="Emma">
+                  <option value="Brian">
+                </datalist>
+                <input type="submit">
+            </form>
+        </div>
+        <h1><h2>
+    </div>
+
+<script type="application/javascript">
+
+(function($){
+    function processForm( e ){
+        $.ajax({
+        url: "/api/setText/",
+        dataType: "json",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify( { "text": $('#theinput').val(), "voice": $('#voice').val() } ),
+        processData: false,
+        success: function( data, textStatus, jQxhr ){
+            $('#response').html( JSON.stringify( data ) );
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+                console.log( errorThrown );
+        }
+    });
+
+    e.preventDefault();
+    }
+
+    $('#text_form').submit( processForm );
+})(jQuery)
+
+
+    
+    
+</script>
+</body>
+</html>
